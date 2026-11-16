@@ -8,8 +8,8 @@
 }
 body:not(.booting) .boot { opacity: 0; visibility: hidden; pointer-events: none; }
 .boot-in { max-width: 820px; text-align: center; }
-.boot-name { margin: 0; }
-.logo { display: block; width: min(1000px, 92vw); margin: 0 auto; }
+.boot-name { margin: 0; display: flex; justify-content: center; }   /* o logo (até 1000 px) é mais largo que .boot-in: flex centraliza o excedente nos dois lados */
+.logo { display: block; flex: none; width: min(1000px, 92vw); margin: 0 auto; }
 .logo-cv { width: 100%; height: auto; }
 .logo-txt {
   position: relative; display: inline-block;
