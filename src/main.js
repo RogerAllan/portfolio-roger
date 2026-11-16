@@ -4,9 +4,10 @@ import '@fontsource-variable/spline-sans';
 import '@fontsource-variable/jetbrains-mono';
 import './styles/index.css';
 import { SYSTEMS, TEXT } from './content/index.js';
-import { state, T, $, saveLang, reduce } from './ui/state.js';
+import { state, T, $, saveLang, reduce, can3D } from './ui/state.js';
 import { renderNav, updateMapped, highlightNav, initNav } from './ui/nav.js';
-import { initDossier, openSystem, openSummary, onArrived, highlightTech, refreshDossier, renderFlat } from './ui/dossier.js';
+import { initDossier, openSystem, openSummary, onArrived, highlightTech, refreshDossier } from './ui/dossier.js';
+import { renderPage } from './ui/page.js';
 import { initEasterEggs } from './ui/easter-eggs.js';
 import { initCutscene, loadCutscenes, preloadCutscenes } from './ui/cutscene.js';
 import { createLoader, preloadImages } from './ui/loader.js';
@@ -15,6 +16,14 @@ import * as sfx from './fx/audio.js';
 import { initMusic, setMusic, warmMusic } from './fx/music.js';
 
 if (state.flatMode) document.body.classList.add('flat-mode');
+
+/* troca entre a carta estelar e a versão em página (mantém o resto da URL) */
+function viewHref(page) {
+  const u = new URL(location.href);
+  if (page) u.searchParams.set('view', 'page'); else u.searchParams.delete('view');
+  u.hash = '';
+  return u.pathname + u.search;
+}
 
 const systemNames = () => Object.fromEntries(SYSTEMS.map((S) => [S.id, T().layers[S.id].name]));
 /* o que cada planeta representa: técnicas (título + problema) ou, nos incidentes, anomalias (nome + sintoma) */
@@ -37,7 +46,12 @@ function applyLang(l) {
   updateMapped();
   state.galaxy?.setLabels(systemNames());
   state.galaxy?.setPlanetInfo(planetInfo());
-  if (state.flatMode) renderFlat();
+  const vb = $('viewBtn');
+  vb.hidden = state.flatMode && !can3D;
+  vb.href = viewHref(!state.flatMode);
+  vb.querySelector('span').textContent = state.flatMode ? t.ui.view3d : t.ui.viewPage;
+  vb.setAttribute('aria-label', vb.querySelector('span').textContent);
+  if (state.flatMode) renderPage();
   else refreshDossier();
 }
 
@@ -95,7 +109,7 @@ async function startScene() {
       state.flatMode = true;
       document.body.classList.add('flat-mode');
       document.body.classList.remove('booting');
-      renderFlat();
+      renderPage();
     }, { once: true });
     await state.galaxy.ready;
   } catch (err) {
@@ -112,6 +126,7 @@ function imageUrls(m) {
   const out = [];
   const walk = (v, key) => {
     if (['planet', 'planets', 'nebula'].includes(key)) return;
+    if (state.flatMode && ['logo', 'defeat'].includes(key)) return;   /* a página não usa */
     if (typeof v === 'string') { if (/\.(webp|png|jpe?g)$/i.test(v)) out.push(assetUrl(v)); }
     else if (Array.isArray(v)) v.forEach((x) => walk(x));
     else if (v && typeof v === 'object') for (const k in v) walk(v[k], k);
@@ -149,6 +164,7 @@ Promise.all([
   await Promise.all([images, startScene()]);
   applyLang(state.lang);
   await loader.finish();
+  if (state.flatMode) return;   /* versão em página: sem abertura animada, cutscenes ou trilha */
   if (manifest?.logo) playLogo($('logo'), manifest.logo, 'Roger Allan', reduce);
   preloadCutscenes().then(warmMusic);
 });

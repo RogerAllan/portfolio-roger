@@ -15,6 +15,10 @@ function initialLang() {
   return LANGS.includes(nav) ? nav : 'en';
 }
 
+/* ?view=page abre a versão em página; sem WebGL (ou com menos movimento) ela é o padrão */
+const wantsPage = new URLSearchParams(location.search).get('view') === 'page';
+export const can3D = hasWebGL && !reduce;
+
 export const state = {
   lang: initialLang(),
   galaxy: null,                 /* API da cena, ou null no modo lista */
@@ -23,7 +27,7 @@ export const state = {
   openId: null,                 /* id do sistema aberto no dossiê, ou 'resumo' */
   visited: new Set(),
   bossHits: TEXT.pt.bosses.map(() => 0),
-  flatMode: reduce || !hasWebGL,
+  flatMode: wantsPage || !can3D,
   mapToast: false,
   bossToast: false
 };

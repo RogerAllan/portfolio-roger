@@ -109,14 +109,6 @@ export function highlightTech(i, click) {
   btn.scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
 }
 
-export function renderFlat() {
-  const flat = $('flat');
-  flat.hidden = false;
-  flat.innerHTML = `<section class="f-sec" id="sec-resumo">${summaryBlock()}</section>`
-    + SYSTEMS.map((S) => `<section class="f-sec" id="sec-${S.id}">${systemBlock(S.id)}</section>`).join('');
-  bind(flat);
-}
-
 export function initDossier() {
   $('backBtn').addEventListener('click', closeDossier);
   addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDossier(); });
