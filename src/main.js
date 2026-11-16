@@ -90,6 +90,13 @@ async function startScene() {
       onStep: (k) => loader.done(k)
     });
     document.body.classList.add('has-3d');
+    /* celular sem memória de GPU pode perder o contexto WebGL: cai no modo lista em vez de tela preta */
+    $('space').addEventListener('webglcontextlost', () => {
+      state.flatMode = true;
+      document.body.classList.add('flat-mode');
+      document.body.classList.remove('booting');
+      renderFlat();
+    }, { once: true });
     await state.galaxy.ready;
   } catch (err) {
     console.error(err);

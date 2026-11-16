@@ -2,9 +2,9 @@
 
 /* ---------- dossiê ---------- */
 .dossier {
-  position: fixed; top: 0; right: 0; bottom: 0; z-index: 25; width: min(580px, 100vw);
+  position: fixed; top: var(--hud-h); right: 0; bottom: 0; z-index: 25; width: min(580px, 100vw);
   overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;
-  padding: 84px 40px 64px 52px;
+  padding: 18px 40px 64px 52px;
   background: linear-gradient(90deg, rgba(4, 4, 6, .4), rgba(4, 4, 6, .93) 14%);
   border-left: 1px solid var(--line);
   animation: dIn .5s cubic-bezier(.2, .8, .2, 1);
@@ -12,7 +12,7 @@
 .dossier.q { border-left-color: rgba(224, 36, 43, .6); background: linear-gradient(90deg, rgba(58, 14, 26, .35), rgba(34, 9, 16, .9) 14%); }
 @keyframes dIn { from { transform: translateX(40px); opacity: 0; } to { transform: none; opacity: 1; } }
 .back {
-  position: sticky; top: -64px; margin: -60px 0 24px; padding: 5px 12px;
+  position: sticky; top: 0; z-index: 2; margin: 0 0 24px; padding: 5px 12px;
   background: rgba(4, 4, 6, .8); border: 1px solid var(--line);
   font-family: var(--f-disp); font-size: 13px;
 }

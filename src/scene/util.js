@@ -3,7 +3,8 @@ import * as THREE from 'three';
 
 export const fire = (name, detail) => dispatchEvent(new CustomEvent(name, { detail }));
 export const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-export const isSmall = () => matchMedia('(max-width: 820px)').matches;
+/* mesmo critério do layout compacto (styles/responsive.css): estreita ou baixa */
+export const isSmall = () => matchMedia('(max-width: 820px), (max-height: 520px)').matches;
 
 /* pontos de um círculo no plano XZ */
 export function ringPoints(r, n = 96) {

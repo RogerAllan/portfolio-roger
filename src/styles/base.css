@@ -23,6 +23,8 @@
   --f-jp: 'Yu Gothic', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Meiryo', sans-serif;
 
   --nav-w: 272px;
+  --hud-h: 64px;   /* altura do cabeçalho: o dossiê começa abaixo dele */
+  --nav-h: 0px;
   color-scheme: dark;
 }
 
