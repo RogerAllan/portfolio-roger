@@ -1,0 +1,42 @@
+/* ============================================================
+   Carta estelar: computador de navegação de uma nave abandonada.
+   Tektur (com eixo de largura) nos títulos e rótulos, Spline Sans no texto.
+   O mapa 3D é o palco; a interface fica nas bordas e só o dossiê
+   ocupa espaço quando um sistema está aberto.
+   ============================================================ */
+
+:root {
+  --void: #040406;
+  --hull: #8c8f96;
+  --ice: #dfe6ee;
+  --ice-dim: #a3abb6;
+  --alert: #e0242b;
+  --amber: #ffb547;
+  --wine: #3a0d22;
+  --violet: #1b1030;
+  --sick: #3fd1c4;
+  --line: rgba(223, 230, 238, .14);
+
+  --f-disp: 'Tektur Variable', 'Tektur', 'Bahnschrift', 'Segoe UI', sans-serif;
+  --f-body: 'Spline Sans Variable', 'Spline Sans', 'Segoe UI', system-ui, sans-serif;
+  --f-code: 'JetBrains Mono Variable', ui-monospace, Consolas, monospace;
+  --f-jp: 'Yu Gothic', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Meiryo', sans-serif;
+
+  --nav-w: 272px;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; min-height: 100svh;
+  background: var(--void); color: var(--ice);
+  font-family: var(--f-body); font-size: clamp(15px, .3vw + 14px, 17px); line-height: 1.6;
+  overflow-x: hidden;
+}
+button { font: inherit; color: inherit; cursor: pointer; }
+a { color: inherit; }
+img, svg { display: block; }
+::selection { background: var(--alert); color: var(--ice); }
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }

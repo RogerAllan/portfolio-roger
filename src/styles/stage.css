@@ -1,0 +1,43 @@
+/* Palco 3D: canvas, linhas de varredura e rótulos dos sistemas. */
+
+/* ---------- palco ---------- */
+#space { position: fixed; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; touch-action: none; }
+.scan {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, .22) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, .7) 100%);
+  opacity: .55;
+}
+
+/* rótulos dos sistemas, projetados do 3D */
+.labels { position: fixed; inset: 0; z-index: 2; pointer-events: none; overflow: hidden; }
+.lbl {
+  position: absolute; left: 0; top: 0; opacity: 0; transition: opacity .35s;
+  font-family: var(--f-disp); font-size: 13px; line-height: 1.1; white-space: nowrap;
+}
+.lbl > span { display: inline-block; transform: translate(10px, -50%); }
+.lbl-code { color: var(--amber); font-stretch: 80%; margin-right: 6px; }
+.lbl-name { color: var(--ice); font-stretch: 100%; transition: font-stretch .3s, color .3s; }
+.lbl.on .lbl-name { font-stretch: 125%; color: #fff; text-shadow: 0 0 12px rgba(255, 181, 71, .6); }
+.lbl-q .lbl-code, .lbl-q .lbl-name { color: var(--alert); }
+
+/* rótulos dos planetas do sistema aberto: título discreto; cartão no destacado */
+.plbl {
+  position: absolute; left: 0; top: 0; max-width: 240px; opacity: 0;
+  padding: 2px 7px; border-left: 1px solid rgba(223, 230, 238, .35);
+  font-family: var(--f-disp); font-size: 12px; line-height: 1.3; font-stretch: 95%;
+  color: var(--ice); text-shadow: 0 1px 3px #000, 0 0 10px rgba(4, 4, 6, .9);
+  transition: opacity .25s, background .25s, border-color .25s, max-width .25s;
+  will-change: transform; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.plbl-t { display: block; overflow: hidden; text-overflow: ellipsis; }
+.plbl-d { display: none; }
+.plbl.on {
+  z-index: 1; max-width: 280px; white-space: normal; padding: 8px 11px 9px;
+  background: rgba(4, 4, 6, .82); border-left: 2px solid var(--amber);
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+}
+.plbl.on .plbl-t { font-size: 13.5px; font-weight: 600; color: var(--amber); }
+.plbl.on .plbl-d { display: block; margin-top: 4px; font-family: var(--f-body); font-size: 12.5px; line-height: 1.45; color: var(--ice-dim); text-shadow: none; }
+@media (max-width: 760px) { .plbl:not(.on) { display: none; } .plbl.on { max-width: 220px; } }

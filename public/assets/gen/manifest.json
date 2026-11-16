@@ -1,0 +1,177 @@
+{
+  "logo": {
+    "w": 1600,
+    "h": 600,
+    "master": "logo/master.webp",
+    "boot": [
+      "logo/boot-01.webp",
+      "logo/boot-02.webp",
+      "logo/boot-03.webp",
+      "logo/boot-04.webp",
+      "logo/boot-05.webp",
+      "logo/boot-06.webp",
+      "logo/boot-07.webp",
+      "logo/boot-08.webp",
+      "logo/boot-09.webp",
+      "logo/boot-10.webp"
+    ],
+    "idle": [
+      "logo/idle-01.webp",
+      "logo/idle-02.webp",
+      "logo/idle-03.webp",
+      "logo/idle-04.webp"
+    ]
+  },
+  "anomaly": [
+    "anomaly/a1.webp",
+    "anomaly/a2.webp",
+    "anomaly/a3.webp",
+    "anomaly/a4.webp",
+    "anomaly/a5.webp",
+    "anomaly/a6.webp"
+  ],
+  "nebula": [
+    "nebula/n1.webp",
+    "nebula/n2.webp",
+    "nebula/n3.webp"
+  ],
+  "insignia": {
+    "frontend": "insignia/lumen.webp",
+    "backend": "insignia/forja.webp",
+    "automacao": "insignia/enxame.webp",
+    "dados": "insignia/oraculo.webp",
+    "ia": "insignia/pacto.webp",
+    "seguranca": "insignia/egide.webp",
+    "incidentes": "insignia/quarentena.webp",
+    "infra": "insignia/reator.webp"
+  },
+  "planet": {
+    "albedo": "planet/home-albedo.webp",
+    "clouds": "planet/home-clouds.webp",
+    "water": "planet/home-water.webp"
+  },
+  "defeat": [
+    [
+      "defeat/a1-01.webp",
+      "defeat/a1-02.webp",
+      "defeat/a1-03.webp",
+      "defeat/a1-04.webp",
+      "defeat/a1-05.webp",
+      "defeat/a1-06.webp",
+      "defeat/a1-07.webp",
+      "defeat/a1-08.webp",
+      "defeat/a1-09.webp",
+      "defeat/a1-10.webp"
+    ],
+    [
+      "defeat/a2-01.webp",
+      "defeat/a2-02.webp",
+      "defeat/a2-03.webp",
+      "defeat/a2-04.webp",
+      "defeat/a2-05.webp",
+      "defeat/a2-06.webp",
+      "defeat/a2-07.webp",
+      "defeat/a2-08.webp",
+      "defeat/a2-09.webp",
+      "defeat/a2-10.webp"
+    ],
+    [
+      "defeat/a3-01.webp",
+      "defeat/a3-02.webp",
+      "defeat/a3-03.webp",
+      "defeat/a3-04.webp",
+      "defeat/a3-05.webp",
+      "defeat/a3-06.webp",
+      "defeat/a3-07.webp",
+      "defeat/a3-08.webp",
+      "defeat/a3-09.webp",
+      "defeat/a3-10.webp"
+    ],
+    [
+      "defeat/a4-01.webp",
+      "defeat/a4-02.webp",
+      "defeat/a4-03.webp",
+      "defeat/a4-04.webp",
+      "defeat/a4-05.webp",
+      "defeat/a4-06.webp",
+      "defeat/a4-07.webp",
+      "defeat/a4-08.webp",
+      "defeat/a4-09.webp",
+      "defeat/a4-10.webp"
+    ],
+    [
+      "defeat/a5-01.webp",
+      "defeat/a5-02.webp",
+      "defeat/a5-03.webp",
+      "defeat/a5-04.webp",
+      "defeat/a5-05.webp",
+      "defeat/a5-06.webp",
+      "defeat/a5-07.webp",
+      "defeat/a5-08.webp",
+      "defeat/a5-09.webp",
+      "defeat/a5-10.webp"
+    ],
+    [
+      "defeat/a6-01.webp",
+      "defeat/a6-02.webp",
+      "defeat/a6-03.webp",
+      "defeat/a6-04.webp",
+      "defeat/a6-05.webp",
+      "defeat/a6-06.webp",
+      "defeat/a6-07.webp",
+      "defeat/a6-08.webp",
+      "defeat/a6-09.webp",
+      "defeat/a6-10.webp"
+    ]
+  ],
+  "planets": [
+    {
+      "map": "planets/p01.webp",
+      "kind": "rocky"
+    },
+    {
+      "map": "planets/p02.webp",
+      "kind": "rocky"
+    },
+    {
+      "map": "planets/p03.webp",
+      "kind": "gas"
+    },
+    {
+      "map": "planets/p04.webp",
+      "kind": "gas"
+    },
+    {
+      "map": "planets/p05.webp",
+      "kind": "ice"
+    },
+    {
+      "map": "planets/p06.webp",
+      "kind": "lava"
+    },
+    {
+      "map": "planets/p07.webp",
+      "kind": "ocean"
+    },
+    {
+      "map": "planets/p08.webp",
+      "kind": "ocean"
+    },
+    {
+      "map": "planets/p09.webp",
+      "kind": "rocky"
+    },
+    {
+      "map": "planets/p10.webp",
+      "kind": "ice"
+    },
+    {
+      "map": "planets/p11.webp",
+      "kind": "gas"
+    },
+    {
+      "map": "planets/p12.webp",
+      "kind": "rocky"
+    }
+  ]
+}

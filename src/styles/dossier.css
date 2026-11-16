@@ -1,0 +1,79 @@
+/* Dossiê dos sistemas: técnicas, resumo técnico e origem. */
+
+/* ---------- dossiê ---------- */
+.dossier {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 25; width: min(580px, 100vw);
+  overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;
+  padding: 84px 40px 64px 52px;
+  background: linear-gradient(90deg, rgba(4, 4, 6, .4), rgba(4, 4, 6, .93) 14%);
+  border-left: 1px solid var(--line);
+  animation: dIn .5s cubic-bezier(.2, .8, .2, 1);
+}
+.dossier.q { border-left-color: rgba(224, 36, 43, .6); background: linear-gradient(90deg, rgba(58, 14, 26, .35), rgba(34, 9, 16, .9) 14%); }
+@keyframes dIn { from { transform: translateX(40px); opacity: 0; } to { transform: none; opacity: 1; } }
+.back {
+  position: sticky; top: -64px; margin: -60px 0 24px; padding: 5px 12px;
+  background: rgba(4, 4, 6, .8); border: 1px solid var(--line);
+  font-family: var(--f-disp); font-size: 13px;
+}
+.back::before { content: ''; display: inline-block; width: 6px; height: 6px; margin-right: 8px; border-left: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg) translateY(-1px); }
+.back:hover { border-color: var(--amber); color: var(--amber); }
+
+.d-head { position: relative; min-height: 96px; }
+.d-ins { position: absolute; right: -8px; top: -18px; width: 104px; height: 104px; opacity: .9; }
+.d-code { margin: 0; font-family: var(--f-disp); font-stretch: 80%; font-size: 13px; color: var(--amber); letter-spacing: .12em; }
+.d-name { margin: .1rem 0 0; padding-right: 110px; font-family: var(--f-disp); font-weight: 700; font-stretch: 118%; font-size: clamp(36px, 3.8vw, 54px); line-height: 1; }
+.d-sub { margin: .45rem 0 0; color: var(--ice-dim); }
+.d-q .d-code, .d-q .d-name { color: var(--alert); }
+.d-intro { margin: 1.4rem 0 0; max-width: 60ch; }
+
+/* técnicas = planetas */
+.grim { list-style: none; margin: 1.8rem 0 0; padding: 0; border-top: 1px solid var(--line); }
+.entry { border-bottom: 1px solid var(--line); }
+.e-btn {
+  display: grid; grid-template-columns: 22px 1fr; column-gap: 14px; width: 100%;
+  padding: 14px 0; text-align: left; background: none; border: 0;
+}
+.e-orb {
+  grid-row: 1 / span 2; width: 12px; height: 12px; margin: 6px 0 0 4px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #8b8f99, #2a2c33 70%);
+  box-shadow: 0 0 0 3px rgba(223, 230, 238, .08);
+  transition: box-shadow .25s, transform .25s;
+}
+.e-t { font-family: var(--f-disp); font-weight: 600; font-size: 18px; line-height: 1.25; transition: color .2s; }
+.e-p { margin-top: .2rem; color: var(--ice-dim); font-size: .95em; }
+.e-btn:hover .e-t, .entry.lit .e-t, .entry.open .e-t { color: var(--amber); }
+.e-btn:hover .e-orb, .entry.lit .e-orb, .entry.open .e-orb { transform: scale(1.4); box-shadow: 0 0 0 3px rgba(255, 181, 71, .35), 0 0 14px rgba(255, 181, 71, .6); }
+.e-tags { grid-column: 2; display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+.e-tags span { padding: 1px 7px; font-family: var(--f-disp); font-size: 11.5px; line-height: 1.5; color: var(--ice-dim); border: 1px solid var(--line); }
+.entry.open .e-tags span, .e-btn:hover .e-tags span { color: var(--ice); border-color: rgba(255, 181, 71, .45); }
+.e-how { padding: 0 0 18px 36px; }
+.e-how p { margin: 0; }
+.e-k { font-family: var(--f-disp); font-weight: 600; color: var(--sick); }
+.arsenal { margin: 1.8rem 0 0; font-size: .92em; color: var(--ice-dim); }
+.ar-k { font-family: var(--f-disp); font-weight: 600; color: var(--amber); margin-right: .3em; }
+
+/* ---------- resumo técnico ---------- */
+.s-profile { font-size: 1.05em; }
+.s-h { margin: 2rem 0 .6rem; font-family: var(--f-disp); font-weight: 600; font-stretch: 90%; font-size: 14px; color: var(--amber); letter-spacing: .08em; }
+.s-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.s-list li { position: relative; padding-left: 18px; }
+.s-list li::before { content: ''; position: absolute; left: 2px; top: .62em; width: 7px; height: 7px; border: 1.5px solid var(--sick); transform: rotate(45deg); }
+.s-stack { display: grid; grid-template-columns: max-content 1fr; gap: 6px 16px; margin: 0; }
+.s-stack dt { font-family: var(--f-disp); font-weight: 600; font-size: 14px; color: var(--ice); }
+.s-stack dd { margin: 0; color: var(--ice-dim); }
+.s-explore { margin-top: 2rem; }
+
+/* ---------- origem ---------- */
+.portrait { position: relative; width: 150px; margin: 1.4rem 0 1.2rem; clip-path: polygon(0 0, 100% 0, 100% 86%, 84% 100%, 0 100%); }
+.portrait img { width: 100%; height: auto; filter: grayscale(1) contrast(1.15) brightness(.8); }
+.portrait::after { content: ''; position: absolute; inset: 0; mix-blend-mode: color; background: linear-gradient(180deg, rgba(63, 209, 196, .25), rgba(224, 36, 43, .35)); }
+.o-h { margin: 2rem 0 .4rem; font-family: var(--f-disp); font-weight: 700; font-stretch: 110%; font-size: 24px; line-height: 1.15; }
+.c-links { display: grid; gap: 4px; margin-top: 1rem; }
+.c-link { display: block; padding: 10px 0; border-bottom: 1px solid var(--line); text-decoration: none; font-family: var(--f-disp); font-weight: 600; font-size: 19px; transition: color .2s, border-color .2s; }
+.c-link small { display: block; font-family: var(--f-body); font-weight: 400; font-size: 13px; color: var(--ice-dim); }
+.c-link:hover { color: var(--amber); border-color: var(--amber); }
+.credits { margin-top: 2rem; font-size: 12.5px; color: var(--ice-dim); }
+.credits p { margin: 0 0 .3rem; }
+.credits ul { margin: 0; padding-left: 1.1em; }
+.foot { margin-top: 1.6rem; font-size: 12.5px; color: var(--ice-dim); }

@@ -1,0 +1,57 @@
+/* Tela de abertura. */
+
+/* ---------- abertura ---------- */
+.boot {
+  position: fixed; inset: 0; z-index: 40; display: grid; place-items: center; padding: 6vh 20px;
+  background: radial-gradient(ellipse at 50% 45%, rgba(4, 4, 6, .35) 0%, rgba(4, 4, 6, .85) 70%, var(--void) 100%);
+  transition: opacity .9s ease, visibility 0s linear .9s;
+}
+body:not(.booting) .boot { opacity: 0; visibility: hidden; pointer-events: none; }
+.boot-in { max-width: 820px; text-align: center; }
+.boot-name { margin: 0; }
+.logo { display: block; width: min(1000px, 92vw); margin: 0 auto; }
+.logo-cv { width: 100%; height: auto; }
+.logo-txt {
+  position: relative; display: inline-block;
+  font-family: var(--f-disp); font-weight: 800; font-stretch: 125%;
+  font-size: clamp(48px, 9vw, 132px); line-height: .95; letter-spacing: .01em;
+  color: var(--ice); text-shadow: 0 0 28px rgba(223, 230, 238, .25);
+}
+.logo-txt::before, .logo-txt::after {
+  content: 'Roger Allan'; position: absolute; inset: 0; pointer-events: none;
+  animation: glitch 3.2s steps(1) infinite;
+}
+.logo-txt::before { color: var(--alert); transform: translate(-3px, 0); clip-path: inset(0 0 62% 0); mix-blend-mode: screen; }
+.logo-txt::after { color: var(--sick); transform: translate(3px, 0); clip-path: inset(58% 0 0 0); mix-blend-mode: screen; animation-delay: -1.6s; }
+@keyframes glitch {
+  0%, 86%, 100% { opacity: 0; }
+  87% { opacity: .9; transform: translate(-6px, 1px); }
+  90% { opacity: .7; transform: translate(4px, -1px); }
+  93% { opacity: 0; }
+}
+.boot-role { margin: 1.2rem 0 0; font-family: var(--f-disp); font-stretch: 90%; font-size: clamp(17px, 1.6vw, 21px); color: var(--amber); letter-spacing: .06em; }
+.boot-lead { max-width: 54ch; margin: .9rem auto 0; font-size: 1.08em; }
+.engage {
+  position: relative; margin-top: 2rem; padding: .7em 2em;
+  font-family: var(--f-disp); font-weight: 600; font-stretch: 110%; font-size: clamp(18px, 1.8vw, 22px);
+  background: rgba(224, 36, 43, .08); border: 1px solid rgba(223, 230, 238, .5);
+  transition: background .2s, border-color .2s, letter-spacing .3s;
+}
+.engage::before, .engage::after {
+  content: ''; position: absolute; width: 12px; height: 12px; border: 2px solid var(--amber);
+}
+.engage::before { left: -6px; top: -6px; border-right: 0; border-bottom: 0; }
+.engage::after { right: -6px; bottom: -6px; border-left: 0; border-top: 0; }
+.engage:hover { background: var(--alert); border-color: var(--alert); letter-spacing: .04em; }
+.boot-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px 26px; margin-top: 2rem; }
+.boot-cta .engage { margin-top: 0; }
+.engage.alt { background: transparent; border-color: rgba(223, 230, 238, .28); }
+.engage.alt::before, .engage.alt::after { border-color: var(--sick); }
+.engage.alt:hover { background: rgba(63, 209, 196, .14); border-color: var(--sick); }
+.hud-sum {
+  background: rgba(4, 4, 6, .6); border: 1px solid rgba(63, 209, 196, .5); color: var(--sick); padding: 4px 12px;
+  font-family: var(--f-disp); font-weight: 600; font-size: 13px; line-height: 1.4;
+}
+.hud-sum:hover { background: rgba(63, 209, 196, .14); }
+.boot-stats { max-width: 66ch; margin: 2.6rem auto 0; font-size: .92em; color: var(--ice-dim); }
+.boot-stats b { font-family: var(--f-disp); font-weight: 700; font-size: 1.3em; color: var(--ice); }

@@ -1,0 +1,35 @@
+/* Efeitos: quadro de impacto e toast. */
+
+/* ---------- impacto (quadro de mangá) ---------- */
+.impact { position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: 0; }
+.impact::before {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-conic-gradient(from 0deg at var(--x, 50%) var(--y, 50%), transparent 0deg 3.2deg, rgba(223, 230, 238, .6) 3.2deg 3.9deg, transparent 3.9deg 7deg);
+  -webkit-mask-image: radial-gradient(circle at var(--x, 50%) var(--y, 50%), transparent 0 14%, #000 58%);
+  mask-image: radial-gradient(circle at var(--x, 50%) var(--y, 50%), transparent 0 14%, #000 58%);
+}
+.impact::after { content: ''; position: absolute; inset: 0; background: var(--ice); opacity: 0; }
+.impact.big::after { background: var(--alert); }
+.impact.on { animation: impact .5s ease-out; }
+.impact.on::after { animation: flash .18s ease-out; }
+.ono {
+  position: absolute; left: var(--x, 50%); top: var(--y, 50%);
+  font-family: var(--f-jp); font-weight: 900; font-size: 60px; line-height: 1; white-space: nowrap;
+  color: var(--ice); -webkit-text-stroke: 2px var(--alert); paint-order: stroke fill;
+  transform: translate(-50%, -125%) rotate(-8deg);
+}
+.impact.big .ono { font-size: 100px; color: var(--amber); }
+.impact.on .ono { animation: ono .5s cubic-bezier(.2, 1.6, .4, 1); }
+@keyframes impact { 0% { opacity: 1; } 70% { opacity: .9; } 100% { opacity: 0; } }
+@keyframes flash { 0% { opacity: .4; } 100% { opacity: 0; } }
+@keyframes ono { 0% { transform: translate(-50%, -125%) rotate(-8deg) scale(.3); } 60% { transform: translate(-50%, -125%) rotate(-8deg) scale(1.12); } 100% { transform: translate(-50%, -125%) rotate(-8deg) scale(1); } }
+
+/* ---------- toast ---------- */
+.toast {
+  position: fixed; left: 50%; top: 68px; z-index: 70; max-width: min(92vw, 520px);
+  padding: 10px 20px; transform: translate(-50%, -14px); opacity: 0; pointer-events: none;
+  font-family: var(--f-disp); font-weight: 600; font-size: 16px; text-align: center;
+  background: rgba(4, 4, 6, .92); border: 1px solid var(--sick); color: var(--sick);
+  transition: opacity .3s, transform .3s;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }

@@ -1,0 +1,28 @@
+{
+  "credits": [
+    {
+      "name": "Organic alien spaceship",
+      "author": "RickStikkelorum",
+      "url": "https://sketchfab.com/3d-models/af5018eeddab45919a11b9df3e86754c"
+    },
+    {
+      "name": "Alien Ring",
+      "author": "Cogent",
+      "url": "https://sketchfab.com/3d-models/9c288fb496ab4d15838c0517d0cef47c"
+    },
+    {
+      "name": "Cosmic Eye of Horror",
+      "author": "Huntaer87",
+      "url": "https://sketchfab.com/3d-models/06da91d166d844b98bac8484652301cf"
+    },
+    {
+      "name": "Void-Touched Crystal Rock",
+      "author": "PuzzledPapaya",
+      "url": "https://sketchfab.com/3d-models/2eee63550ed6470dac7659211a605795"
+    }
+  ],
+  "ship": "ship.glb",
+  "gate": "gate.glb",
+  "eye": "eye.glb",
+  "crystal": "crystal.glb"
+}
