@@ -6,8 +6,10 @@ import './styles/index.css';
 import { SYSTEMS, TEXT } from './content/index.js';
 import { state, T, $, saveLang, reduce, can3D } from './ui/state.js';
 import { renderNav, updateMapped, highlightNav, initNav } from './ui/nav.js';
-import { initDossier, openSystem, openSummary, onArrived, highlightTech, refreshDossier } from './ui/dossier.js';
+import { initDossier, openSystem, openSummary, openWorks, onArrived, highlightTech, refreshDossier } from './ui/dossier.js';
 import { renderPage } from './ui/page.js';
+import { initZoom } from './ui/zoom.js';
+import { initShipCursor } from './ui/ship-cursor.js';
 import { initEasterEggs } from './ui/easter-eggs.js';
 import { initCutscene, loadCutscenes, preloadCutscenes } from './ui/cutscene.js';
 import { createLoader, preloadImages } from './ui/loader.js';
@@ -18,9 +20,9 @@ import { initMusic, setMusic, warmMusic } from './fx/music.js';
 if (state.flatMode) document.body.classList.add('flat-mode');
 
 /* troca entre a carta estelar e a versão em página (mantém o resto da URL) */
-function viewHref(page) {
+function viewHref(to3D) {
   const u = new URL(location.href);
-  if (page) u.searchParams.set('view', 'page'); else u.searchParams.delete('view');
+  if (to3D) u.searchParams.set('view', '3d'); else u.searchParams.delete('view');
   u.hash = '';
   return u.pathname + u.search;
 }
@@ -48,7 +50,7 @@ function applyLang(l) {
   state.galaxy?.setPlanetInfo(planetInfo());
   const vb = $('viewBtn');
   vb.hidden = state.flatMode && !can3D;
-  vb.href = viewHref(!state.flatMode);
+  vb.href = viewHref(state.flatMode);
   vb.querySelector('span').textContent = state.flatMode ? t.ui.view3d : t.ui.viewPage;
   vb.setAttribute('aria-label', vb.querySelector('span').textContent);
   if (state.flatMode) renderPage();
@@ -76,6 +78,7 @@ function engage() {
   setTimeout(() => {
     $('navList').querySelector('.n-btn')?.focus({ preventScroll: true });
     if (target === 'resumo') openSummary();
+    else if (target === 'trabalhos') openWorks();
     else if (target && SYSTEMS.some((s) => s.id === target)) openSystem(target);
   }, state.galaxy ? 4200 : 0);
 }
@@ -143,6 +146,8 @@ initControls();
 initMusic();
 initNav();
 initDossier();
+initZoom();
+initShipCursor();
 initEasterEggs();
 initCutscene();
 loadCutscenes();

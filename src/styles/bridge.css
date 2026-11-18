@@ -1,0 +1,166 @@
+/* Ponte de comando: módulos fixos à esquerda, três consoles na abertura e barra de
+   status no rodapé. Sobrescreve o layout base de command.css. */
+
+:root { --rail-w: 188px; --dock-h: 40px; }
+
+/* ---------- fundo: espaço profundo e a carta estelar gravada ----------
+   Nebulosas da versão 3D, uma luz na cor do setor atual e a carta com a constelação
+   das áreas, que gira devagar com a rolagem. */
+@property --sky { syntax: '<color>'; inherits: true; initial-value: #ffb547; }
+html { transition: --sky 1.6s ease; }
+body.flat-mode::before {
+  content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(115% 95% at 50% 45%, transparent 30%, rgb(4 4 6 / .86) 100%),
+    radial-gradient(52vmax 44vmax at 84% 16%, color-mix(in srgb, var(--sky) 12%, transparent), transparent 72%),
+    radial-gradient(62vmax 52vmax at 8% 100%, rgb(4 4 6 / .62), transparent 76%),
+    linear-gradient(rgb(4 4 6 / .56), rgb(4 4 6 / .56)),
+    url('/assets/gen/nebula/n2.webp') right -20vmax top -24vmax / 72vmax auto no-repeat,
+    url('/assets/gen/nebula/n1.webp') left -16vmax bottom -30vmax / 78vmax auto no-repeat,
+    var(--void);
+}
+body.flat-mode::after {
+  --chart: max(138vmin, 1040px);
+  content: ''; position: fixed; left: 64%; top: 52%; z-index: 0; width: var(--chart); height: var(--chart);
+  margin: calc(var(--chart) / -2) 0 0 calc(var(--chart) / -2); pointer-events: none;
+  background: url('/assets/star-chart.svg') center / contain no-repeat; opacity: .68;
+  transform: rotate(calc(var(--prog, 0) * 52deg)); will-change: transform;
+}
+.cc-head > * { text-shadow: 0 1px 16px rgb(4 4 6 / .95), 0 0 3px rgb(4 4 6 / .7); }
+.cc-grid { gap: 0; background: none; border: 0; }
+.cc-acard { background: var(--plate); box-shadow: inset 0 0 0 1px var(--rule); }
+.flat { --plate: rgb(7 10 15 / .76); padding-bottom: calc(var(--dock-h) + 40px); }
+
+/* ---------- abertura: operador, mapa e sistemas ---------- */
+.cc-hero { grid-template-columns: minmax(300px, .86fr) minmax(0, 1.34fr) minmax(232px, .62fr); gap: 12px; align-items: stretch; }
+.cc-id { display: flex; flex-direction: column; padding: 22px; min-width: 0; }
+.cc-id .cc-status { font-size: 14px; }
+.cc-id .cc-name { margin: 16px 0 0; font-size: 0; line-height: 0; }
+.cc-logo { display: block; width: 100%; max-width: 460px; height: auto; }
+.cc-nametxt { display: none; }
+.cc-idtop { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 16px; }
+.cc-idtxt { min-width: 0; }
+.cc-photo { position: relative; flex: none; width: clamp(84px, 6.4vw, 112px); aspect-ratio: 3 / 4; margin: 0; }
+.cc-photo img { display: block; width: 100%; height: 100%; object-fit: cover; box-shadow: 0 0 0 1px var(--rule); }
+.cc-photo::before, .cc-photo::after { content: ''; position: absolute; z-index: 1; width: 16px; height: 16px; border: 2px solid var(--amber); pointer-events: none; }
+.cc-photo::before { top: -4px; left: -4px; border-right: 0; border-bottom: 0; }
+.cc-photo::after { right: -4px; bottom: -4px; border-left: 0; border-top: 0; }
+.cc-id .cc-role { margin-top: 0; font-size: clamp(17px, 1.35vw, 21px); }
+
+/* a marca também assina o cabeçalho da versão em página */
+.flat-mode .callsign {
+  display: block; width: 174px; height: 34px; overflow: hidden; font-size: 0; color: transparent;
+  background: url('/assets/logo-name.webp') left center / contain no-repeat;
+}
+.flat-mode .callsign:hover { color: transparent; filter: brightness(1.2); }
+.cc-id .cc-place { font-size: 14.5px; line-height: 1.4; }
+.cc-id .cc-lead { margin-top: 10px; font-size: 15px; line-height: 1.5; color: var(--ice-dim); }
+.cc-id .cc-cta { margin-top: auto; padding-top: 16px; }
+.cc-id .c-links { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 0; }
+.cc-id .c-link { max-width: none; min-width: 0; padding: 9px 12px; font-size: 15px; }
+.cc-id .c-link small { display: none; }
+.cc-id .c-cv { grid-column: 1 / -1; padding: 11px 14px; font-size: 17px; }
+.cc-id .c-cv small { display: block; }
+.cc-id .c-social { margin-top: 10px; }
+
+.cc-btitle { margin: 0; padding: 10px 16px; border-bottom: 1px solid var(--rule); font-family: var(--f-disp); font-weight: 600; font-size: 15px; line-height: 1.3; color: var(--amber); }
+.cc-view { display: flex; flex-direction: column; min-width: 0; }
+.cc-view .cc-radar { display: flex; flex: 1; flex-direction: column; justify-content: center; }
+.cc-view .cc-scope { width: min(100%, 62svh); }
+.cc-view .cc-readout { margin-top: 0; min-height: 62px; padding: 8px 16px; justify-content: space-between; }
+.cc-view .cc-rhint { font-size: 14px; line-height: 1.35; }
+
+.cc-board { display: flex; flex-direction: column; min-width: 0; }
+.cc-sysl { flex: 1; display: grid; grid-auto-rows: 1fr; }
+.cc-sysrow, .cc-sysinc {
+  display: grid; grid-template-columns: 10px minmax(0, 1fr); gap: 0 10px; align-content: center; width: 100%; padding: 8px 16px;
+  border: 0; border-bottom: 1px solid var(--rule); background: none; color: var(--ice); text-align: left; text-decoration: none;
+}
+.cc-sysrow i, .cc-sysinc i { grid-row: 1 / span 2; align-self: center; width: 9px; height: 9px; border-radius: 50%; background: var(--c); box-shadow: 0 0 8px var(--c); }
+.cc-sysrow span, .cc-sysinc span { font-family: var(--f-disp); font-weight: 600; font-size: 16px; line-height: 1.2; }
+.cc-sysrow small, .cc-sysinc small { font-size: 13px; line-height: 1.3; color: var(--ice-dim); }
+.cc-sysrow:hover { background: color-mix(in srgb, var(--c) 12%, transparent); }
+.cc-sysrow[aria-pressed='true'] { background: rgb(255 181 71 / .12); box-shadow: inset 3px 0 0 var(--amber); }
+.cc-sysinc { --c: var(--alert); border-bottom: 0; background: rgb(58 13 34 / .4); }
+.cc-sysinc small { color: var(--sick); }
+.cc-sysinc:hover span { color: var(--amber); }
+
+.cc-kpis { margin-top: 12px; border: 1px solid var(--rule); }
+
+/* ---------- cabeçalho de módulo ---------- */
+.cc-head { position: relative; padding-bottom: 14px; border-bottom: 1px solid var(--rule); }
+.cc-meta { position: absolute; right: 0; bottom: 14px; margin: 0; font-family: var(--f-disp); font-size: 15px; color: var(--sick); }
+
+/* ---------- temática ---------- */
+.cc-theme { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 12px; margin-top: 14px; }
+.cc-why p { margin: 0 0 14px; max-width: 68ch; }
+.cc-why p:last-child { margin-bottom: 0; }
+.cc-legend { margin: 0; }
+.cc-legend > div { padding: 10px 0; border-top: 1px solid var(--rule); }
+.cc-legend dt { font-family: var(--f-disp); font-weight: 600; font-size: 16.5px; }
+.cc-legend dd { margin: 1px 0 0; color: var(--ice-dim); font-size: 15px; line-height: 1.45; }
+
+/* ---------- barra de status ---------- */
+.cc-dock {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 14; display: flex; align-items: stretch; justify-content: flex-end;
+  height: var(--dock-h); background: #07090d; border-top: 1px solid var(--rule);
+}
+.cc-dstat { display: flex; align-items: center; margin: 0; font-family: var(--f-disp); font-size: 13.5px; color: var(--ice-dim); white-space: nowrap; }
+.cc-dstat span { padding: 0 14px; border-left: 1px solid var(--rule); line-height: var(--dock-h); }
+#ccSector { color: var(--amber); }
+#ccProg { font-variant-numeric: tabular-nums; }
+
+/* ---------- módulos à esquerda em telas largas ---------- */
+.cc-jcode { display: none; }
+@media (min-width: 1280px) {
+  .flat { max-width: none; padding-top: calc(var(--hud-h) + 12px); padding-left: calc(var(--rail-w) + 16px); padding-right: 16px; }
+  .flat > .cc-hero, .flat > .cc-kpis, .flat > .cc-sec { max-width: 1560px; margin-left: auto; margin-right: auto; }
+  .cc-sec { padding-top: 48px; }
+  .cc-panel { scroll-margin-top: calc(var(--hud-h) + 16px); }
+  .cc-jump {
+    position: fixed; top: var(--hud-h); left: 0; bottom: var(--dock-h); width: var(--rail-w); z-index: 12;
+    flex-direction: column; gap: 0; margin: 0; padding: 12px 0; overflow-y: auto; border-right: 1px solid var(--rule); border-bottom: 0; background: rgb(6 8 12 / .86);
+  }
+  .cc-jump a { display: grid; gap: 0; padding: 9px 16px; border-bottom: 0; border-left: 3px solid transparent; line-height: 1.25; }
+  .cc-jcode { display: block; font-stretch: 85%; font-size: 12px; color: var(--amber); }
+  .cc-jump a:hover { background: rgb(223 230 238 / .05); }
+  .cc-jump a[aria-current] { border-left-color: var(--amber); background: rgb(255 181 71 / .1); }
+}
+
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .cc-id { padding: 18px; }
+}
+
+/* ---------- telas menores ---------- */
+@media (max-width: 1279px) {
+  .cc-hero { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+  .cc-board { grid-column: 1 / -1; }
+  .cc-sysl { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); grid-auto-rows: auto; }
+}
+@media (max-width: 1080px) {
+  .cc-hero { grid-template-columns: minmax(0, 1fr); }
+  .cc-theme { grid-template-columns: minmax(0, 1fr); }
+  .cc-dstat #ccClock { display: none; }
+}
+@media (max-width: 640px) {
+  .cc-id { padding: 18px 16px; }
+  .flat-mode .callsign { width: 128px; height: 26px; }
+  .cc-id .c-links { grid-template-columns: minmax(0, 1fr); }
+  .cc-id .c-link { flex: none; }
+  .cc-sysl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cc-sysrow { padding: 8px 12px; }
+  .cc-sysrow small { display: none; }
+  .cc-meta { position: static; margin-top: 8px; }
+}
+
+@media print {
+  .cc-dock, .cc-board, .cc-view { display: none !important; }
+  body.flat-mode::before, body.flat-mode::after { display: none; }
+  .flat { padding: 0 !important; }
+  .cc-theme { display: block; }
+  .cc-meta, .cc-legend dd { color: #444; }
+  .cc-legend dt, .cc-btitle { color: #111; }
+  .cc-id { display: block; padding: 0; }
+  .cc-logo { display: none; }
+  .cc-nametxt { display: block; font-size: 34pt; line-height: 1.1; color: #111; }
+}

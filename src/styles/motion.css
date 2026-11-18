@@ -1,0 +1,62 @@
+/* Motion do centro de comando. Tudo fica sob html.mo, que só é ligado por
+   ui/motion.js: sem JS ou com menos movimento, o conteúdo aparece direto. */
+
+#pgStars { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+
+/* progresso da viagem sob o cabeçalho */
+html.mo .flat-mode .hud-top::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: var(--amber);
+  transform: scaleX(var(--prog, 0)); transform-origin: left;
+}
+
+/* o console liga uma vez: identidade, radar, áreas acendendo uma a uma */
+html.mo .cc-id > * { opacity: 0; transform: translateY(12px); }
+html.mo .cc-hero.go .cc-id > * { opacity: 1; transform: none; transition: opacity .7s ease, transform .8s cubic-bezier(.2, .8, .2, 1); }
+html.mo .cc-hero.go .cc-id > :nth-child(2) { transition-delay: .1s; }
+html.mo .cc-hero.go .cc-id > :nth-child(3) { transition-delay: .25s; }
+html.mo .cc-hero.go .cc-id > :nth-child(4) { transition-delay: .35s; }
+html.mo .cc-hero.go .cc-id > :nth-child(5) { transition-delay: .45s; }
+html.mo .cc-hero.go .cc-id > :nth-child(6) { transition-delay: .55s; }
+html.mo .cc-scope svg { opacity: 0; transform: scale(.86) rotate(-14deg); }
+html.mo .cc-hero.go .cc-scope svg { opacity: 1; transform: none; transition: opacity .9s ease .2s, transform 1.3s cubic-bezier(.16, 1, .3, 1) .2s; }
+html.mo .cc-node, html.mo .cc-core { opacity: 0; }
+html.mo .cc-hero.go .cc-node { opacity: 1; transition: opacity .35s ease calc(.75s + var(--i) * .11s); }
+html.mo .cc-hero.go .cc-core { opacity: 1; transition: opacity .35s ease .6s; }
+html.mo .cc-hero.go .cc-sweep { opacity: 1; transition: opacity 1s ease 1s; animation: cc-spin 8s linear infinite; }
+html.mo .cc-hero.go .cc-node i { animation: cc-ping 8s linear var(--a) infinite; }
+html.mo .cc-hero.go .cc-core i { animation: cc-core 2.8s ease-in-out infinite; }
+html.mo .cc-hero.done *, html.mo .cc-hero.done { transition: none !important; }
+@keyframes cc-spin { to { transform: rotate(360deg); } }
+/* cada área pisca no instante em que a varredura passa por ela */
+@keyframes cc-ping {
+  0% { transform: scale(1.5); box-shadow: 0 0 0 0 var(--c); }
+  9% { transform: scale(1); box-shadow: 0 0 0 16px transparent; }
+  100% { transform: scale(1); box-shadow: 0 0 12px var(--c); }
+}
+@keyframes cc-core { 50% { box-shadow: 0 0 30px 8px rgb(224 36 43 / .55); } }
+
+/* títulos entram como leitura de sinal */
+html.mo .cc-head .cc-h { clip-path: inset(-10% 100% -10% 0); }
+html.mo .cc-head.in .cc-h { clip-path: inset(-10% -4% -10% 0); transition: clip-path .85s cubic-bezier(.2, .8, .2, 1); }
+
+/* trocar de trabalho varre a tela principal */
+html.mo .cc-work.swap .cc-shot::after, html.mo .cc-work.swap .cc-noshot::after {
+  content: ''; position: absolute; left: 0; right: 0; top: 0; height: 26%; pointer-events: none;
+  background: linear-gradient(transparent, rgb(63 209 196 / .3)); border-bottom: 2px solid var(--sick);
+  animation: cc-sweepdown .8s ease-in-out forwards;
+}
+html.mo .cc-noshot { position: relative; }
+html.mo .cc-work.swap .cc-shot img { animation: cc-tune .8s ease-out; }
+html.mo .cc-work.swap .cc-work-body { animation: cc-settle .45s ease-out; }
+@keyframes cc-sweepdown {
+  from { transform: translateY(-100%); opacity: 1; }
+  90% { opacity: 1; }
+  to { transform: translateY(400%); opacity: 0; }
+}
+@keyframes cc-tune { from { filter: brightness(.25) saturate(0); } to { filter: none; } }
+@keyframes cc-settle { from { opacity: 0; } to { opacity: 1; } }
+
+@media print {
+  #pgStars { display: none !important; }
+  html.mo .cc-head .cc-h, html.mo .cc-id > * { opacity: 1 !important; transform: none !important; clip-path: none !important; }
+}

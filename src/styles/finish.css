@@ -1,0 +1,246 @@
+/* Acabamento do centro de comando: peças usinadas de uma nave.
+   Toda peça tem cantos cortados (o desenho da Tektur), um filete de luz e reage ao
+   cursor. Âmbar é o que está selecionado; a cor de cada área vem da sua estrela. */
+
+.flat, .flat-mode .hud-top { --k: 9px; --glass: linear-gradient(160deg, rgb(255 255 255 / .05), transparent 34%); }
+
+/* ---------- peça chanfrada: --e é o filete, --f é o preenchimento ---------- */
+.flat .c-link, .flat .cc-link, .flat .cc-related button, .flat-mode .hud-view {
+  --e: rgb(223 230 238 / .22); --f: #0a0e14;
+  position: relative; isolation: isolate; overflow: hidden; border: 0; background: var(--e);
+  clip-path: polygon(var(--k) 0, 100% 0, 100% calc(100% - var(--k)), calc(100% - var(--k)) 100%, 0 100%, 0 var(--k));
+  transition: background-color .25s ease, color .25s ease;
+}
+.flat .c-link::before, .flat .cc-link::before, .flat .cc-related button::before, .flat-mode .hud-view::before {
+  content: ''; position: absolute; inset: 1px; z-index: -1; background: var(--f);
+  clip-path: polygon(var(--k) 0, 100% 0, 100% calc(100% - var(--k)), calc(100% - var(--k)) 100%, 0 100%, 0 var(--k));
+}
+/* brilho que atravessa a peça */
+.flat .c-link::after, .flat .cc-link::after, .flat-mode .hud-view::after {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(105deg, transparent 36%, rgb(255 255 255 / .17) 50%, transparent 64%);
+  transform: translateX(-125%); transition: transform .75s cubic-bezier(.2, .7, .2, 1);
+}
+.flat .c-link:hover::after, .flat .cc-link:hover::after, .flat-mode .hud-view:hover::after { transform: translateX(125%); }
+.flat .c-link:hover, .flat .cc-link:hover, .flat .cc-related button:hover, .flat-mode .hud-view:hover { --e: var(--amber); }
+
+/* foco visível dentro das peças recortadas */
+.flat .c-link:focus-visible, .flat .cc-link:focus-visible, .flat .cc-tab:focus-visible, .flat .cc-related button:focus-visible,
+.flat .cc-rbtn:focus-visible, .flat .cc-acard:focus-visible, .flat .cc-sysrow:focus-visible, .flat .cc-shot:focus-visible,
+.flat summary:focus-visible, .flat .cc-jump a:focus-visible, .flat-mode .hud-view:focus-visible, .flat-mode .lang button:focus-visible {
+  outline: 2px solid #fff; outline-offset: -4px;
+}
+
+/* ---------- botões de contato ---------- */
+.flat .cc-cta .c-link { display: flex; align-items: center; gap: 11px; padding: 10px 14px; border: 0; background: var(--e); }
+.flat .cc-cta .c-link:hover { background: var(--e); color: var(--ice); }
+.flat .c-ico { display: block; flex: none; width: 21px; height: 21px; fill: none; stroke: var(--amber); stroke-width: 1.6; stroke-linecap: square; stroke-linejoin: miter; transition: transform .3s ease; }
+.flat .c-link:hover .c-ico { transform: translateY(-1px) scale(1.08); }
+.flat .c-lab { min-width: 0; }
+.flat .cc-id .c-link:not(.c-cv) { gap: 8px; padding: 9px 10px; font-size: 14.5px; line-height: 1.2; }
+.flat .cc-cta .c-cv { --e: #ffd493; --f: linear-gradient(180deg, #ffc66f, #ffa92f); color: #170f02; padding: 13px 16px; }
+.flat .cc-cta .c-cv:hover { --e: #ffe6bf; color: #170f02; }
+.flat .c-cv .c-ico { width: 26px; height: 26px; stroke: #170f02; stroke-width: 1.9; }
+.flat .c-cv:hover .c-ico { transform: translateY(2px); }
+.flat .c-cv .c-lab { font-weight: 700; }
+.flat .c-social { gap: 8px; }
+.flat .c-social a { display: inline-flex; align-items: center; gap: 7px; padding: 4px 11px 4px 8px; border: 1px solid rgb(63 209 196 / .3); text-decoration: none; clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px); transition: background-color .25s, color .25s; }
+.flat .c-social .c-ico { width: 16px; height: 16px; stroke: currentColor; }
+.flat .c-social a:hover { background: rgb(63 209 196 / .14); color: var(--ice); }
+
+/* ---------- cabeçalho ---------- */
+.flat-mode .hud-view { --f: #0b0b0a; padding: 6px 15px; color: var(--amber); }
+.flat-mode .hud-view:hover { background: var(--e); }
+.flat-mode .lang { gap: 1px; padding: 1px; background: rgb(223 230 238 / .2); clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px); }
+.flat-mode .lang button { padding: 5px 11px; border: 0; background: #08090c; transition: background-color .2s, color .2s; }
+.flat-mode .lang button:hover { background: #171a20; }
+.flat-mode .lang button[aria-pressed='true'] { background: var(--amber); color: #170f02; font-weight: 700; }
+
+/* ---------- chapas ---------- */
+.flat .cc-plate {
+  background:
+    linear-gradient(var(--amber), var(--amber)) left bottom / 16px 1px no-repeat,
+    linear-gradient(var(--amber), var(--amber)) left bottom / 1px 16px no-repeat,
+    var(--glass), var(--plate);
+}
+.flat .cc-plate::before, .flat .cc-acard::before, .flat .cc-kpis > div::before {
+  content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; transition: opacity .35s ease;
+  background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgb(255 214 150 / .075), transparent 70%);
+}
+.flat .cc-plate:hover::before, .flat .cc-acard:hover::before, .flat .cc-kpis > div:hover::before { opacity: 1; }
+.flat .cc-log { background: var(--glass), var(--plate); }
+.cc-btitle { position: relative; }
+.flat .cc-btitle::after { content: ''; position: absolute; left: 16px; bottom: -1px; width: 34px; height: 1px; background: var(--amber); box-shadow: 0 0 8px var(--amber); }
+
+/* medidor: um traço por técnica, na cor da área */
+.cc-ticks { display: block; width: calc(var(--n, 5) * 6px - 2px); height: 9px; background: repeating-linear-gradient(90deg, var(--c, var(--amber)) 0 4px, transparent 4px 6px); opacity: .85; }
+
+/* ---------- menu lateral: uma rota de voo ---------- */
+@media (min-width: 1280px) {
+  .flat .cc-jump { padding: 18px 0; }
+  .flat .cc-jump a { position: relative; padding: 11px 26px 11px 42px; border-left: 0; transition: background .25s, padding-left .25s ease; }
+  .flat .cc-jump a::before { content: ''; position: absolute; left: 21px; top: 0; bottom: 0; width: 1px; background: rgb(223 230 238 / .17); }
+  .flat .cc-jump a:first-child::before { top: 50%; }
+  .flat .cc-jump a:last-child::before { bottom: 50%; }
+  .flat .cc-jump a::after {
+    content: ''; position: absolute; left: 17px; top: 50%; width: 9px; height: 9px; margin-top: -4.5px; background: #07090d;
+    border: 1px solid rgb(223 230 238 / .45); transform: rotate(45deg); transition: background .25s, border-color .25s, box-shadow .25s, transform .25s;
+  }
+  .flat .cc-jump a.past::before, .flat .cc-jump a[aria-current]::before { background: var(--amber); }
+  .flat .cc-jump a[aria-current]::before { bottom: 50%; }
+  .flat .cc-jump a.past::after { background: var(--amber); border-color: var(--amber); }
+  .flat .cc-jump a:hover { padding-left: 46px; background: linear-gradient(90deg, rgb(223 230 238 / .07), transparent); }
+  .flat .cc-jump a:hover::after { border-color: var(--amber); transform: rotate(45deg) scale(1.2); }
+  .flat .cc-jump a[aria-current] {
+    padding-left: 46px; color: var(--amber); font-weight: 600;
+    background: linear-gradient(90deg, rgb(255 181 71 / .2), rgb(255 181 71 / .05));
+    clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%);
+  }
+  .flat .cc-jump a[aria-current]::after { background: var(--amber); border-color: #ffe0ad; box-shadow: 0 0 12px 2px rgb(255 181 71 / .75); transform: rotate(45deg) scale(1.25); }
+  .flat .cc-jcode { color: var(--ice-dim); transition: color .25s; }
+  .flat .cc-jump a[aria-current] .cc-jcode, .flat .cc-jump a:hover .cc-jcode { color: var(--amber); }
+}
+@media (max-width: 1279px) {
+  .flat .cc-jump a[aria-current] { background: linear-gradient(0deg, rgb(255 181 71 / .16), transparent); }
+}
+
+/* ---------- painel de sistemas ---------- */
+.flat .cc-sysrow, .flat .cc-sysinc { grid-template-columns: 10px minmax(0, 1fr) auto; }
+.flat .cc-sysrow i, .flat .cc-sysinc i { width: 8px; height: 8px; border-radius: 0; transform: rotate(45deg); }
+.flat .cc-sysrow .cc-ticks { grid-column: 3; grid-row: 1 / span 2; align-self: center; opacity: .5; transition: opacity .25s; }
+.flat .cc-sysrow { background: linear-gradient(90deg, color-mix(in srgb, var(--c) 22%, transparent), transparent) left / 0 100% no-repeat; transition: background-size .4s cubic-bezier(.2, .7, .2, 1); }
+.flat .cc-sysrow:hover { background: linear-gradient(90deg, color-mix(in srgb, var(--c) 22%, transparent), transparent) left / 100% 100% no-repeat; }
+.flat .cc-sysrow:hover .cc-ticks, .flat .cc-sysrow[aria-pressed='true'] .cc-ticks { opacity: 1; }
+.flat .cc-sysrow[aria-pressed='true'] { background: linear-gradient(90deg, rgb(255 181 71 / .2), transparent); box-shadow: inset 3px 0 0 var(--amber); }
+
+/* ---------- telemetria: instrumentos com régua ---------- */
+.flat .cc-kpis { background: var(--glass), var(--plate); }
+.flat .cc-kpis > div { position: relative; padding-bottom: 20px; border-left: 0; }
+.flat .cc-kpis > div + div { box-shadow: -1px 0 0 0 rgb(223 230 238 / .1); }
+.flat .cc-kpis > div::after {
+  content: ''; position: absolute; left: 18px; right: 18px; bottom: 8px; height: 5px;
+  background: repeating-linear-gradient(90deg, rgb(223 230 238 / .28) 0 1px, transparent 1px 7px);
+  -webkit-mask-image: linear-gradient(90deg, #000, transparent); mask-image: linear-gradient(90deg, #000, transparent); transition: background .3s;
+}
+.flat .cc-kpis > div:hover::after { background: repeating-linear-gradient(90deg, var(--amber) 0 1px, transparent 1px 7px); }
+.flat .cc-kpis > div:hover dd { color: var(--amber); }
+.flat .cc-kpis dd { transition: color .25s; }
+
+/* ---------- abas: mesa de comutação ---------- */
+.flat .cc-tabs { gap: 0; padding-left: 2px; }
+.flat .cc-tab {
+  --e: rgb(223 230 238 / .2); --f: #0a0e14;
+  position: relative; isolation: isolate; display: inline-flex; align-items: center; gap: 8px; margin-right: -4px; padding: 8px 22px; border: 0; background: var(--e); color: var(--ice-dim);
+  clip-path: polygon(var(--k) 0, 100% 0, calc(100% - var(--k)) 100%, 0 100%); transition: background-color .22s, color .22s;
+}
+.flat .cc-tab::before { content: ''; position: absolute; inset: 1px; z-index: -1; background: var(--f); clip-path: polygon(var(--k) 0, 100% 0, calc(100% - var(--k)) 100%, 0 100%); }
+.flat .cc-tab i { flex: none; width: 6px; height: 6px; background: var(--c, var(--amber)); box-shadow: 0 0 7px var(--c, var(--amber)); transform: rotate(45deg); }
+.flat .cc-tab:hover { --e: var(--c, var(--amber)); color: var(--ice); }
+.flat .cc-tab[aria-pressed='true'] { --e: #ffd493; --f: linear-gradient(180deg, #ffc66f, #ffa92f); color: #170f02; font-weight: 700; }
+.flat .cc-tab[aria-pressed='true'] i { background: #170f02; box-shadow: none; }
+
+/* ---------- tela de trabalhos ---------- */
+.flat .cc-shot::before, .flat .cc-shot::after { content: ''; position: absolute; z-index: 2; width: 34px; height: 34px; pointer-events: none; border: 2px solid var(--amber); transition: transform .3s ease; }
+.flat .cc-shot::before { top: 12px; left: 12px; border-right: 0; border-bottom: 0; }
+.flat .cc-shot::after { right: 12px; bottom: 12px; border-left: 0; border-top: 0; }
+.flat .cc-shot:hover::before { transform: translate(5px, 5px); }
+.flat .cc-shot:hover::after { transform: translate(-5px, -5px); }
+html.mo .flat .cc-work.swap .cc-shot::after { right: 0; left: 0; bottom: auto; top: 0; width: auto; height: 26%; border: 0; border-bottom: 2px solid var(--sick); transition: none; }
+.flat .cc-metrics { gap: 0; margin-top: 18px; }
+.flat .cc-metrics > div { min-width: 132px; padding: 2px 26px 2px 14px; box-shadow: inset 2px 0 0 var(--sick); }
+.flat .cc-metrics > div + div { margin-left: 8px; }
+.flat .cc-chips span { padding: 2px 10px; border: 0; background: rgb(223 230 238 / .07); box-shadow: inset 0 -1px 0 rgb(223 230 238 / .24); color: var(--ice); transition: background .2s, box-shadow .2s; }
+.flat .cc-chips span:hover { background: rgb(255 181 71 / .14); box-shadow: inset 0 -1px 0 var(--amber); }
+.flat .cc-link { --e: rgb(63 209 196 / .55); display: inline-block; padding: 7px 18px; text-decoration: none; color: var(--sick); }
+.flat .cc-link:hover { --e: var(--sick); color: var(--ice); }
+
+/* lista: cada trabalho é um canal da tela principal */
+.flat .cc-roster { background: rgb(4 6 9 / .42); }
+.flat .cc-rbtn { position: relative; grid-template-columns: 64px minmax(0, 1fr); gap: 0 12px; align-items: center; padding: 10px 14px 10px 14px; border-left: 0; transition: background .25s; }
+.flat .cc-rthumb { grid-row: 1 / span 2; width: 64px; height: 40px; object-fit: cover; object-position: top; filter: saturate(.25) brightness(.72); box-shadow: 0 0 0 1px rgb(223 230 238 / .18); transition: filter .3s, box-shadow .3s; }
+.flat .cc-rthumb.is-empty { background: repeating-linear-gradient(135deg, rgb(223 230 238 / .1) 0 1px, transparent 1px 6px); filter: none; }
+.flat .cc-rname { font-size: 16px; transition: color .2s; }
+.flat .cc-rkind { font-size: 13px; }
+.flat .cc-rbtn:hover { background: linear-gradient(90deg, rgb(223 230 238 / .08), transparent); }
+.flat .cc-rbtn:hover .cc-rthumb, .flat .cc-rbtn[aria-pressed='true'] .cc-rthumb { filter: none; }
+.flat .cc-rbtn[aria-pressed='true'] { background: linear-gradient(90deg, rgb(255 181 71 / .2), rgb(255 181 71 / .03)); }
+.flat .cc-rbtn[aria-pressed='true'] .cc-rthumb { box-shadow: 0 0 0 1px var(--amber); }
+.flat .cc-rbtn[aria-pressed='true']::before { content: ''; position: absolute; left: 0; top: 50%; margin-top: -8px; border: 8px solid transparent; border-left: 9px solid var(--amber); }
+
+/* ---------- cartões de área ---------- */
+.flat .cc-acard { position: relative; overflow: hidden; padding: 22px; transition: background .3s; clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%); }
+.flat .cc-acard::after { content: ''; position: absolute; left: 0; top: 0; width: 100%; height: 2px; background: linear-gradient(90deg, var(--c), transparent); transform: scaleX(.18); transform-origin: left; transition: transform .45s cubic-bezier(.2, .7, .2, 1); }
+.flat .cc-acard:hover::after { transform: scaleX(1); }
+.flat .cc-acard:hover { background: linear-gradient(150deg, color-mix(in srgb, var(--c) 15%, transparent), transparent 62%), var(--plate); }
+.flat .cc-acard img { transition: transform .4s cubic-bezier(.2, .7, .2, 1), filter .4s; }
+.flat .cc-acard:hover img { transform: scale(1.12) rotate(-5deg); filter: drop-shadow(0 0 10px var(--c)); }
+.flat .cc-acard .cc-ticks { margin-top: 12px; }
+.flat .cc-acount { margin-top: 6px; }
+
+/* ---------- técnicas ---------- */
+.flat .cc-tech { position: relative; transition: background .25s; }
+.flat .cc-tech::before { content: ''; position: absolute; left: -14px; top: 0; bottom: 0; width: 2px; background: var(--c, var(--amber)); transform: scaleY(0); transform-origin: top; transition: transform .3s ease; }
+.flat .cc-tech[open]::before, .flat .cc-tech:hover::before { transform: scaleY(1); }
+.flat .cc-tech summary { padding-right: 42px; }
+.flat .cc-tech summary::after {
+  content: ''; position: absolute; right: 6px; top: 16px; width: 16px; height: 16px;
+  background: linear-gradient(var(--amber), var(--amber)) center / 10px 1.5px no-repeat, linear-gradient(var(--amber), var(--amber)) center / 1.5px 10px no-repeat;
+  outline: 1px solid rgb(255 181 71 / .5); outline-offset: 3px; transform: scale(.86); transition: transform .3s ease, background-color .25s;
+}
+.flat .cc-tech summary:hover::after { background-color: rgb(255 181 71 / .16); }
+.flat .cc-tech[open] summary::after { content: ''; transform: rotate(45deg) scale(.86); }
+.flat .cc-tech[open] b { color: var(--amber); }
+
+/* ---------- trajetória ---------- */
+.flat .cc-stop::after { width: 9px; height: 9px; left: -1px; background: #07090d; border: 1px solid var(--amber); transform: rotate(45deg); transition: background .25s, box-shadow .25s; }
+.flat .cc-stop:hover::after { background: var(--amber); box-shadow: 0 0 10px var(--amber); }
+.flat .cc-period { color: var(--ice); }
+.flat .cc-list li::before { top: 19px; width: 7px; height: 7px; transform: rotate(45deg); }
+
+/* ---------- incidentes ---------- */
+.flat .cc-inc { position: relative; transition: background .25s; }
+.flat .cc-inc::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--alert); box-shadow: 0 0 12px var(--alert); transform: scaleY(0); transform-origin: top; transition: transform .35s ease; }
+.flat .cc-inc[open]::before, .flat .cc-inc:hover::before { transform: scaleY(1); }
+.flat .cc-inc summary { position: relative; grid-template-columns: 70px minmax(0, 1fr) auto 18px; }
+.flat .cc-inc summary::after { content: ''; width: 8px; height: 8px; margin-left: 4px; border-right: 1.5px solid var(--ice-dim); border-bottom: 1.5px solid var(--ice-dim); transform: rotate(45deg) translate(-2px, -2px); transition: transform .3s ease, border-color .25s; }
+.flat .cc-inc[open] summary::after { transform: rotate(225deg) translate(-2px, -2px); border-color: var(--alert); }
+.flat .cc-icode { justify-self: start; padding: 1px 8px; background: rgb(224 36 43 / .14); box-shadow: inset 0 -1px 0 var(--alert); }
+.flat .cc-iok { padding: 2px 11px 2px 9px; background: rgb(63 209 196 / .1); clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px); }
+.flat .cc-iok i { border-radius: 0; transform: rotate(45deg); }
+.flat .cc-pre { border-left-width: 3px; background: linear-gradient(90deg, rgb(63 209 196 / .09), rgb(4 4 6 / .8) 42%); }
+
+/* ---------- atalhos e links de texto ---------- */
+.flat .cc-rgo { padding-bottom: 2px; text-decoration: none; background: linear-gradient(currentColor, currentColor) left bottom / 100% 1px no-repeat; transition: background-size .3s ease, color .2s; }
+.flat .cc-rgo:hover { background-size: 34% 1px; color: var(--amber); }
+.flat .cc-related button { --e: rgb(63 209 196 / .5); --f: #0a1114; --k: 6px; padding: 3px 12px; }
+.flat .cc-related button:hover { --e: var(--sick); color: var(--ice); }
+
+/* ---------- movimento contínuo só para quem aceita movimento ---------- */
+html.mo .flat .cc-jump a[aria-current]::after { animation: cc-beacon 2.6s ease-in-out infinite; }
+@keyframes cc-beacon { 50% { box-shadow: 0 0 20px 5px rgb(255 181 71 / .5); } }
+@media (prefers-reduced-motion: reduce) {
+  .flat *, .flat *::before, .flat *::after { transition-duration: .01ms !important; }
+}
+
+/* ---------- telas menores ---------- */
+@media (max-width: 1080px) {
+  .flat .cc-roster { background: none; }
+  .flat .cc-rbtn { display: block; padding: 10px 16px; }
+  .flat .cc-rthumb { display: none; }
+  .flat .cc-rbtn[aria-pressed='true']::before { display: none; }
+}
+@media (max-width: 640px) {
+  .flat .cc-tab { padding: 7px 20px; }
+  .flat .cc-tabs { padding-left: 16px; }
+  .flat .cc-inc summary { grid-template-columns: 62px minmax(0, 1fr) 18px; }
+  .flat .cc-inc summary::after { grid-column: 3; grid-row: 1; }
+  .flat .cc-metrics > div { min-width: 0; flex: 1 1 100%; margin: 0 0 8px; }
+  .flat .cc-metrics > div + div { margin-left: 0; }
+}
+
+@media print {
+  .flat .c-ico, .flat .cc-ticks, .flat .cc-rthumb { display: none; }
+  .flat .c-link, .flat .cc-link, .flat .cc-plate { clip-path: none; background: none; }
+  .flat .c-link::before, .flat .cc-link::before { display: none; }
+  .flat .cc-icode, .flat .cc-iok { background: none; }
+}

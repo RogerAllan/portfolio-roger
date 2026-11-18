@@ -1,6 +1,6 @@
 /* HTML do dossiê: técnicas, anomalias, origem, resumo técnico e o bloco de
    cada sistema. Funções puras sobre o estado; quem liga os eventos é o dossier.js. */
-import { SYSTEMS, BOSS_CODE, STACK } from '../content/index.js';
+import { SYSTEMS, BOSS_CODE, STACK, WORKS, worksFor, CV_FILES, LINKS } from '../content/index.js';
 import { state, T, esc } from './state.js';
 import { assetUrl } from '../fx/logo-frames.js';
 import { finalFrame } from './defeat.js';
@@ -47,10 +47,52 @@ function anomalies() {
 
 export function contactLinks() {
   const t = T().ui;
+  const cv = CV_FILES[state.lang];
+  const ico = (d) => `<svg class="c-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="${d}" /></svg>`;
   return `<div class="c-links">
-      <a class="c-link" href="mailto:rogerallan4004@gmail.com">${esc(t.mail)}<small>rogerallan4004@gmail.com</small></a>
-      <a class="c-link" href="https://wa.me/5547988731921?text=${encodeURIComponent(t.waMsg)}" target="_blank" rel="noopener">${esc(t.wa)}<small>+55 47 98873-1921</small></a>
-    </div>`;
+      <a class="c-link c-cv" href="${cv.href}" download="${cv.name}">${ico('M12 3v12 M7 10.5l5 5 5-5 M4 20.5h16')}<span class="c-lab">${esc(t.cvDownload)}<small>${esc(t.cvMeta)}</small></span></a>
+      <a class="c-link" href="mailto:rogerallan4004@gmail.com">${ico('M3 6h18v12H3z M3 7l9 7 9-7')}<span class="c-lab">${esc(t.mail)}<small>rogerallan4004@gmail.com</small></span></a>
+      <a class="c-link" href="https://wa.me/5547988731921?text=${encodeURIComponent(t.waMsg)}" target="_blank" rel="noopener">${ico('M4 20l1.4-4.2A8 8 0 1 1 8.4 19z M9 9.5c0 3 2.5 5.5 5.5 5.5')}<span class="c-lab">${esc(t.wa)}<small>+55 47 98873-1921</small></span></a>
+    </div>
+    <p class="c-social"><a href="${LINKS.linkedin}" target="_blank" rel="noopener">${ico('M4 4h16v16H4z M8 10.5V17 M8 7.2v.1 M12 17v-6.5 M12 13.5c0-3.6 5-3.6 5 0V17')}LinkedIn</a><a href="${LINKS.github}" target="_blank" rel="noopener">${ico('M7 4v16 M7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z M7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4z M17 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4z M17 10c0 4-10 2-10 6')}GitHub</a></p>`;
+}
+
+/* card de um trabalho: com print (ampliável) ou só texto */
+function workCard(w) {
+  const ui = T().ui;
+  const [kind, desc, metrics] = w.t[state.lang];
+  const src = w.img ? `/assets/works/${w.img}.webp` : '';
+  return `<article class="wk${w.img ? '' : ' no-shot'}" id="work-${w.id}">
+      ${w.img ? `<button type="button" class="wk-shot" data-zoom="${src}" aria-label="${esc(ui.worksZoom.replace('{n}', w.name))}">
+        <span class="wk-frame"><img src="${src}" alt="" width="1440" height="900" loading="lazy" decoding="async" /></span>
+      </button>` : ''}
+      <div class="wk-body">
+        <p class="wk-kind">${esc(kind)}</p>
+        <h3 class="wk-name">${esc(w.name)}</h3>
+        <p class="wk-desc">${esc(desc)}</p>
+        ${metrics ? `<dl class="wk-metrics">${metrics.map(([v, l]) => `<div><dt>${esc(l)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>` : ''}
+        <p class="wk-stack">${w.stack.map((x) => `<span>${esc(x)}</span>`).join('')}</p>
+        ${w.url ? `<a class="wk-link" href="${esc(w.url)}" target="_blank" rel="noopener">${esc(ui.worksVisit)}</a>` : ''}
+      </div>
+    </article>`;
+}
+
+/* lista de trabalhos: primeiro os que têm print, depois os só de texto */
+export function worksList(list = WORKS) {
+  const shots = list.filter((w) => w.img), rest = list.filter((w) => !w.img);
+  return `${shots.length ? `<div class="wk-list">${shots.map(workCard).join('')}</div>` : ''}
+    ${rest.length ? `<div class="wk-more">${rest.map(workCard).join('')}</div>` : ''}`;
+}
+
+export function worksPanel() {
+  const t = T().ui;
+  return `<header class="d-head">
+      <p class="d-code">WK-00</p>
+      <h2 class="d-name">${esc(t.worksH)}</h2>
+      <p class="d-sub">${esc(t.worksSub)}</p>
+    </header>
+    <p class="d-intro">${esc(t.worksIntro)}</p>
+    ${worksList()}`;
 }
 
 function origin() {
@@ -91,6 +133,7 @@ export function systemBlock(id) {
   const ins = state.manifest?.insignia?.[id];
   const body = id === 'incidentes' ? anomalies() : id === 'sobre' ? origin() : techList(id);
   const arsenal = S.stack ? `<p class="arsenal"><span class="ar-k">${T().ui.arsenal}</span> ${S.stack.map(esc).join(', ')}</p>` : '';
+  const related = worksFor(id);
   return `<header class="d-head${id === 'incidentes' ? ' d-q' : ''}">
       ${ins ? `<img class="d-ins" src="${assetUrl(ins)}" alt="" width="512" height="512" decoding="async" />` : ''}
       <p class="d-code">${S.code}</p>
@@ -99,5 +142,6 @@ export function systemBlock(id) {
     </header>
     ${tx.intro ? `<p class="d-intro">${esc(tx.intro)}</p>` : ''}
     ${body}
+    ${related.length ? `<h3 class="s-h">${esc(T().ui.worksArea)}</h3>${worksList(related)}` : ''}
     ${arsenal}`;
 }

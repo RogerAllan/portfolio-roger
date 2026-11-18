@@ -3,7 +3,7 @@
    página corrida. */
 import { SYSTEMS } from '../content/index.js';
 import { state, $ } from './state.js';
-import { systemBlock, summaryBlock } from './templates.js';
+import { systemBlock, summaryBlock, worksPanel } from './templates.js';
 import { strike, updateBossCount } from './anomalies.js';
 import { preloadDefeats } from './defeat.js';
 import { markNav, updateMapped } from './nav.js';
@@ -38,7 +38,7 @@ export function bind(root) {
 }
 
 function render(id) {
-  dBody().innerHTML = id === 'resumo' ? summaryBlock() : systemBlock(id);
+  dBody().innerHTML = id === 'resumo' ? summaryBlock() : id === 'trabalhos' ? worksPanel() : systemBlock(id);
   bind(dBody());
 }
 
@@ -72,17 +72,21 @@ export function onArrived(id) {
   show(id);
 }
 
-export function openSummary() {
+/* painéis que abrem sem viajar: resumo técnico e trabalhos */
+function openPanel(id) {
   if (document.body.classList.contains('booting')) {
     document.body.classList.remove('booting');
     state.galaxy?.start(true);
   }
-  if (state.flatMode || !state.galaxy) { $('sec-resumo')?.scrollIntoView(); return; }
-  state.openId = 'resumo';
+  if (state.flatMode || !state.galaxy) { $('sec-' + id)?.scrollIntoView(); return; }
+  state.openId = id;
   clearTimeout(arriveTimer);
-  show('resumo');
-  history.replaceState(null, '', '#resumo');
+  show(id);
+  history.replaceState(null, '', '#' + id);
 }
+
+export const openSummary = () => openPanel('resumo');
+export const openWorks = () => openPanel('trabalhos');
 
 export function closeDossier() {
   if (!state.openId) return;
@@ -111,7 +115,8 @@ export function highlightTech(i, click) {
 
 export function initDossier() {
   $('backBtn').addEventListener('click', closeDossier);
-  addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDossier(); });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && !$('zoom').open) closeDossier(); });
   $('summaryBoot').addEventListener('click', openSummary);
   $('summaryHud').addEventListener('click', openSummary);
+  $('worksHud').addEventListener('click', openWorks);
 }

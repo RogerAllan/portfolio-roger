@@ -1,0 +1,53 @@
+/* Trabalhos no dossiê da carta estelar 3D e o print ampliado (usado nas duas versões). */
+
+.wk-list { display: grid; gap: 32px; margin-top: 16px; }
+.wk-more { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 24px; }
+.wk-shot { position: relative; display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in; }
+.wk-frame { position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden; border: 1px solid var(--line); background: #08090c; }
+.wk-frame img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+/* cantos de mira do sensor */
+.wk-shot::before, .wk-shot::after {
+  content: ''; position: absolute; z-index: 2; width: 22px; height: 22px; pointer-events: none;
+  border: 2px solid var(--amber); transition: transform .3s ease;
+}
+.wk-shot::before { top: -5px; left: -5px; border-right: 0; border-bottom: 0; }
+.wk-shot::after { right: -5px; bottom: -5px; border-left: 0; border-top: 0; }
+.wk-shot:hover::before, .wk-shot:focus-visible::before { transform: translate(-4px, -4px); }
+.wk-shot:hover::after, .wk-shot:focus-visible::after { transform: translate(4px, 4px); }
+
+.wk-body { padding-top: 16px; }
+.wk-kind { margin: 0; font-family: var(--f-disp); font-stretch: 90%; font-size: 13px; color: var(--amber); letter-spacing: .05em; }
+.wk-name { margin: 3px 0 8px; font-family: var(--f-disp); font-weight: 700; font-size: 21px; line-height: 1.15; }
+.wk-desc { margin: 0; }
+.wk-metrics { display: flex; flex-wrap: wrap; gap: 10px 26px; margin: 12px 0 0; }
+.wk-metrics > div { display: flex; flex-direction: column-reverse; justify-content: flex-end; }
+.wk-metrics dd { margin: 0; font-family: var(--f-disp); font-weight: 700; font-size: 23px; line-height: 1.1; color: var(--sick); }
+.wk-metrics dt { font-size: 13px; color: var(--ice-dim); }
+.wk-stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0; }
+.wk-stack span { padding: 1px 9px; border: 1px solid var(--line); font-family: var(--f-code); font-size: 12.5px; color: var(--ice-dim); }
+.wk-link { display: inline-block; margin-top: 14px; color: var(--sick); font-family: var(--f-disp); font-size: 15px; text-underline-offset: 4px; }
+.wk-link:hover { color: var(--ice); }
+
+/* trabalhos ainda sem print */
+.wk.no-shot { padding: 18px 20px; border: 1px solid var(--line); background: rgba(8, 9, 12, .72); }
+.wk.no-shot .wk-body { padding: 0; }
+.wk.no-shot .wk-name { font-size: 20px; }
+.wk.no-shot .wk-desc { font-size: .93em; }
+
+/* os ícones dos contatos só aparecem no centro de comando */
+.c-ico { display: none; }
+.c-lab { display: block; }
+
+/* print ampliado */
+.zoom { padding: 0; border: 1px solid var(--line); background: #050608; max-width: min(94vw, 1440px); max-height: 92vh; overflow: hidden; cursor: zoom-out; }
+.zoom::backdrop { background: rgba(2, 2, 4, .9); }
+.zoom img { display: block; max-width: 100%; max-height: 92vh; }
+.zoom button {
+  position: absolute; top: 10px; right: 10px; padding: 4px 12px; border: 1px solid var(--line); cursor: pointer;
+  background: rgba(4, 4, 6, .86); color: var(--ice); font-family: var(--f-disp); font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .hud-works { display: none; }
+}

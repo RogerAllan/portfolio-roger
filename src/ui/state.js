@@ -15,8 +15,9 @@ function initialLang() {
   return LANGS.includes(nav) ? nav : 'en';
 }
 
-/* ?view=page abre a versão em página; sem WebGL (ou com menos movimento) ela é o padrão */
-const wantsPage = new URLSearchParams(location.search).get('view') === 'page';
+/* a versão em página é a entrada do site; a carta estelar 3D é opcional (?view=3d)
+   e só abre com WebGL e sem o pedido de menos movimento */
+const wants3D = new URLSearchParams(location.search).get('view') === '3d';
 export const can3D = hasWebGL && !reduce;
 
 export const state = {
@@ -27,7 +28,7 @@ export const state = {
   openId: null,                 /* id do sistema aberto no dossiê, ou 'resumo' */
   visited: new Set(),
   bossHits: TEXT.pt.bosses.map(() => 0),
-  flatMode: wantsPage || !can3D,
+  flatMode: !(wants3D && can3D),
   mapToast: false,
   bossToast: false
 };

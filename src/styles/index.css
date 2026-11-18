@@ -8,4 +8,10 @@
 @import './effects.css';
 @import './cutscene.css';
 @import './flat.css';
+@import './command.css';
+@import './bridge.css';
+@import './finish.css';
+@import './cursor.css';
+@import './works.css';
+@import './motion.css';
 @import './responsive.css';

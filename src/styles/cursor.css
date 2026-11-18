@@ -1,0 +1,30 @@
+/* Cursor em forma de nave (ui/ship-cursor.js). O ponto do clique é o nariz da nave. */
+
+html.ship-cursor, html.ship-cursor * { cursor: none !important; }
+/* o print ampliado fica acima de tudo: nele volta o cursor do sistema */
+html.ship-cursor:has(dialog[open]), html.ship-cursor:has(dialog[open]) * { cursor: auto !important; }
+html:has(dialog[open]) #shipCursor, html:has(dialog[open]) #shipTrail { display: none; }
+
+#shipTrail { position: fixed; inset: 0; z-index: 9998; width: 100%; height: 100%; pointer-events: none; }
+#shipCursor { position: fixed; left: 0; top: 0; z-index: 9999; width: 0; height: 0; pointer-events: none; opacity: 0; transition: opacity .18s ease; will-change: transform; }
+#shipCursor.on { opacity: 1; }
+
+.sc-hull { position: absolute; left: -23px; top: -4.5px; display: block; width: 46px; height: 46.5px; transform-origin: 23px 4.5px; transition: transform .16s cubic-bezier(.2, .8, .2, 1); }
+.sc-hull img {
+  position: relative; display: block; width: 100%; height: 100%; user-select: none;
+  filter: drop-shadow(0 0 .7px rgb(222 255 200 / .95)) drop-shadow(0 0 5px rgb(132 255 92 / .5));
+  transition: filter .2s ease;
+}
+.sc-flame {
+  position: absolute; left: 50%; top: 37px; width: 7px; height: calc(7px + var(--thrust, 0) * 24px); margin-left: -3.5px;
+  border-radius: 50% 50% 60% 60% / 20% 20% 80% 80%; background: linear-gradient(#ecfffb, #3fd1c4 42%, transparent);
+  filter: blur(1.1px); opacity: calc(.5 + var(--thrust, 0) * .5);
+}
+#shipCursor.is-hot .sc-hull { transform: scale(1.16); }
+#shipCursor.is-hot img { filter: drop-shadow(0 0 .8px #ffe6bf) drop-shadow(0 0 7px rgb(255 181 71 / .85)); }
+#shipCursor.is-down .sc-hull { transform: scale(.84); }
+
+.sc-ping { position: fixed; z-index: 9997; width: 12px; height: 12px; margin: -6px 0 0 -6px; border: 1.5px solid #3fd1c4; border-radius: 50%; pointer-events: none; animation: sc-ping .5s ease-out forwards; }
+@keyframes sc-ping { to { transform: scale(4.6); opacity: 0; } }
+
+@media print { #shipCursor, #shipTrail, .sc-ping { display: none !important; } }
