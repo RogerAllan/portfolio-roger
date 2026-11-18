@@ -8,7 +8,7 @@ export default {
     lead: 'I design, build and run production systems end to end. This star chart maps what I can do: each system is an area of engineering, each planet is a technique applied in production and, at the center, are the real incidents I solved.',
     start: 'Start navigation',
     summaryBtn: 'View technical summary',
-    surface: 'In production: more than <b>55</b> systems, about <b>280</b> containerized services across <b>87</b> compose files, more than <b>100</b> Dockerfiles, more than <b>750</b> test files and <b>27</b> CI/CD pipelines, in Python, TypeScript, JavaScript and Java.',
+    surface: 'In production: about <b>30</b> systems, more than <b>160</b> containers across <b>87</b> compose files, more than <b>100</b> Dockerfiles, more than <b>750</b> test files and <b>27</b> CI/CD pipelines, in Python, TypeScript, JavaScript and Java.',
     systems: 'Systems',
     hint: 'Drag to rotate, scroll to zoom and click a system to jump.',
     back: 'Back to the map',
@@ -43,7 +43,7 @@ export default {
     worksZoom: 'Enlarge the screenshot of {n}',
     worksClose: 'Close',
     available: 'Open to opportunities and projects',
-    kpis: [['55+', 'production systems'], ['~280', 'containerized services'], ['87', 'compose files'], ['100+', 'Dockerfiles'], ['750+', 'test files'], ['27', 'CI/CD pipelines']],
+    kpis: [['~30', 'production systems'], ['160+', 'production containers'], ['87', 'compose files'], ['100+', 'Dockerfiles'], ['750+', 'test files'], ['27', 'CI/CD pipelines']],
     jump: { trabalhos: 'Work', trajetoria: 'Experience', resumo: 'Summary', engenharia: 'Engineering', incidentes: 'Incidents', tema: 'Theme', sobre: 'About' },
     mapH: 'Star chart',
     metaWorks: '{n} projects',
@@ -85,9 +85,9 @@ export default {
     profile: 'Full-stack engineer who designs, builds and runs production systems end to end: React interfaces, APIs in Python, Node.js and Java, data and machine learning pipelines, AI agents and the infrastructure that keeps it all up around the clock.',
     highlightsH: 'Highlights',
     highlights: [
-      'More than 55 systems in production and about 280 containerized services, run on 3 servers with Docker Compose, CI/CD on GitHub Actions and no ports exposed to the internet.',
+      'About 30 systems in production and more than 160 containers, run on 3 servers with Docker Compose, CI/CD on GitHub Actions and no ports exposed to the internet.',
       'Real time at scale: Socket.IO on a PM2 cluster with Redis pub/sub, a fan-out WebSocket proxy and SSE.',
-      'Machine learning in production: a pricing model (LightGBM with conformal regression) trained on more than 400 thousand transactions, served through an API with versioned artifacts and an auditable pipeline of 1.3 million records.',
+      'Machine learning in production: a pricing model (LightGBM with conformal regression) built on a base of 425 thousand sales, served through an API with versioned artifacts and an auditable pipeline of 1.3 million records.',
       'AI agents with tool use that respect the user’s RBAC and require confirmation before any write, with layered defense against prompt injection.',
       'Production incident response, from root cause to fix: PostgreSQL lock pileup (CPU from 192 % to 24 %), int4 sequence overflow and orphan process leaks.',
       'Quality: more than 750 test files with pytest, Vitest, Jest and JUnit with Testcontainers.'
@@ -149,7 +149,7 @@ export default {
     },
     dados: {
       name: 'Data & ML', sub: 'Databases, pipelines and models',
-      intro: 'Data modeling in PostgreSQL (about 42 projects) and Redis (16), queues with Kafka and RabbitMQ and applied machine learning: a pricing model trained on more than 400 thousand transactions, with rigorous validation and calibrated uncertainty.',
+      intro: 'Data modeling in PostgreSQL (about 42 projects) and Redis (16), queues with Kafka and RabbitMQ and applied machine learning: a pricing model built on a base of 425 thousand sales, with rigorous validation and calibrated uncertainty.',
       techs: [
         { t: 'Transactional queue in PostgreSQL', p: 'Several workers processed the same item and duplicated work.', h: 'SELECT … FOR UPDATE SKIP LOCKED: each worker atomically reserves a free row, with no extra broker.' },
         { t: 'Advisory locks', p: 'Replicas ran the same maintenance routine in parallel.', h: 'pg_advisory_lock guarantees exclusive execution across replicas; whoever does not get the lock moves on without blocking.' },
@@ -192,7 +192,7 @@ export default {
     },
     infra: {
       name: 'Infrastructure', sub: 'DevOps, CI/CD and observability',
-      intro: 'End-to-end operations: 3 servers, 87 compose files with about 280 services, more than 100 Dockerfiles, 27 CI/CD pipelines on GitHub Actions, observability with Prometheus and Grafana and no exposed ports.',
+      intro: 'End-to-end operations: 3 servers, 87 compose files with more than 160 containers, more than 100 Dockerfiles, 27 CI/CD pipelines on GitHub Actions, observability with Prometheus and Grafana and no exposed ports.',
       techs: [
         { t: 'Zero exposed ports', p: 'Databases and dashboards exposed to the internet become targets within hours.', h: 'Publishing only through Cloudflare Tunnel with managed TLS, server access only by SSH key and databases restricted to the internal network.' },
         { t: 'Self-healing services', p: 'Frozen containers are still "running" as far as Docker knows.', h: 'A healthcheck on every service, an autoheal sidecar that restarts unhealthy ones and an init as PID 1 to reap orphan processes.' },

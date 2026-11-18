@@ -8,7 +8,7 @@ export default {
     lead: 'Projeto, construo e opero sistemas em produção de ponta a ponta. Esta carta estelar mapeia o que eu sei fazer: cada sistema é uma área da engenharia, cada planeta é uma técnica aplicada em produção e, no centro, estão os incidentes reais que eu resolvi.',
     start: 'Iniciar navegação',
     summaryBtn: 'Ver resumo técnico',
-    surface: 'Em produção: mais de <b>55</b> sistemas, cerca de <b>280</b> serviços em contêiner em <b>87</b> arquivos compose, mais de <b>100</b> Dockerfiles, mais de <b>750</b> arquivos de teste e <b>27</b> pipelines de CI/CD, em Python, TypeScript, JavaScript e Java.',
+    surface: 'Em produção: cerca de <b>30</b> sistemas, mais de <b>160</b> contêineres em <b>87</b> arquivos compose, mais de <b>100</b> Dockerfiles, mais de <b>750</b> arquivos de teste e <b>27</b> pipelines de CI/CD, em Python, TypeScript, JavaScript e Java.',
     systems: 'Sistemas',
     hint: 'Arraste para girar, role para aproximar e clique num sistema para saltar.',
     back: 'Voltar ao mapa',
@@ -43,7 +43,7 @@ export default {
     worksZoom: 'Ampliar o print de {n}',
     worksClose: 'Fechar',
     available: 'Aberto a oportunidades e projetos',
-    kpis: [['55+', 'sistemas em produção'], ['~280', 'serviços em contêiner'], ['87', 'arquivos compose'], ['100+', 'Dockerfiles'], ['750+', 'arquivos de teste'], ['27', 'pipelines de CI/CD']],
+    kpis: [['~30', 'sistemas em produção'], ['160+', 'contêineres em produção'], ['87', 'arquivos compose'], ['100+', 'Dockerfiles'], ['750+', 'arquivos de teste'], ['27', 'pipelines de CI/CD']],
     jump: { trabalhos: 'Trabalhos', trajetoria: 'Trajetória', resumo: 'Resumo', engenharia: 'Engenharia', incidentes: 'Incidentes', tema: 'Temática', sobre: 'Sobre' },
     mapH: 'Mapa estelar',
     metaWorks: '{n} trabalhos',
@@ -85,9 +85,9 @@ export default {
     profile: 'Desenvolvedor full-stack que projeta, constrói e opera sistemas em produção de ponta a ponta: interfaces em React, APIs em Python, Node.js e Java, pipelines de dados e machine learning, agentes de IA e a infraestrutura que mantém tudo no ar 24 horas.',
     highlightsH: 'Destaques',
     highlights: [
-      'Mais de 55 sistemas em produção e cerca de 280 serviços em contêiner, operados em 3 servidores com Docker Compose, CI/CD no GitHub Actions e nenhuma porta exposta à internet.',
+      'Cerca de 30 sistemas em produção e mais de 160 contêineres, operados em 3 servidores com Docker Compose, CI/CD no GitHub Actions e nenhuma porta exposta à internet.',
       'Tempo real em escala: Socket.IO em cluster PM2 com Redis pub/sub, proxy WebSocket com fan-out e SSE.',
-      'Machine learning em produção: modelo de precificação (LightGBM com regressão conformal) treinado sobre mais de 400 mil transações, servido por API com artefatos versionados e pipeline auditável de 1,3 milhão de registros.',
+      'Machine learning em produção: modelo de precificação (LightGBM com regressão conformal) construído sobre uma base de 425 mil vendas, servido por API com artefatos versionados e pipeline auditável de 1,3 milhão de registros.',
       'Agentes de IA com tool use que respeitam o RBAC do usuário e exigem confirmação antes de qualquer escrita, com defesa em camadas contra prompt injection.',
       'Resposta a incidentes em produção, da causa-raiz à correção: lock pileup no PostgreSQL (CPU de 192 % para 24 %), estouro de sequência int4 e vazamento de processos órfãos.',
       'Qualidade: mais de 750 arquivos de teste com pytest, Vitest, Jest e JUnit com Testcontainers.'
@@ -149,7 +149,7 @@ export default {
     },
     dados: {
       name: 'Dados e ML', sub: 'Bancos, pipelines e modelos',
-      intro: 'Modelagem de dados em PostgreSQL (cerca de 42 projetos) e Redis (16), filas com Kafka e RabbitMQ e machine learning aplicado: um modelo de precificação treinado sobre mais de 400 mil transações, com validação rigorosa e incerteza calibrada.',
+      intro: 'Modelagem de dados em PostgreSQL (cerca de 42 projetos) e Redis (16), filas com Kafka e RabbitMQ e machine learning aplicado: um modelo de precificação construído sobre uma base de 425 mil vendas, com validação rigorosa e incerteza calibrada.',
       techs: [
         { t: 'Fila transacional no PostgreSQL', p: 'Vários workers processavam o mesmo item e duplicavam trabalho.', h: 'SELECT … FOR UPDATE SKIP LOCKED: cada worker reserva atomicamente uma linha livre, sem broker extra.' },
         { t: 'Advisory locks', p: 'Réplicas executavam a mesma rotina de manutenção em paralelo.', h: 'pg_advisory_lock garante execução exclusiva entre réplicas; quem não obtém o lock segue sem bloquear.' },
@@ -192,7 +192,7 @@ export default {
     },
     infra: {
       name: 'Infraestrutura', sub: 'DevOps, CI/CD e observabilidade',
-      intro: 'Operação de ponta a ponta: 3 servidores, 87 arquivos compose com cerca de 280 serviços, mais de 100 Dockerfiles, 27 pipelines de CI/CD no GitHub Actions, observabilidade com Prometheus e Grafana e nenhuma porta exposta.',
+      intro: 'Operação de ponta a ponta: 3 servidores, 87 arquivos compose com mais de 160 contêineres, mais de 100 Dockerfiles, 27 pipelines de CI/CD no GitHub Actions, observabilidade com Prometheus e Grafana e nenhuma porta exposta.',
       techs: [
         { t: 'Zero portas expostas', p: 'Bancos e painéis expostos na internet viram alvo em horas.', h: 'Publicação apenas por Cloudflare Tunnel com TLS gerenciado, acesso aos servidores só por chave SSH e bancos restritos à rede interna.' },
         { t: 'Autorrecuperação de serviços', p: 'Contêineres travados continuam "rodando" para o Docker.', h: 'Healthcheck em cada serviço, sidecar autoheal que reinicia os não saudáveis e init no PID 1 para recolher processos órfãos.' },
